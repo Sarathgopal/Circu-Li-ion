@@ -58,9 +58,9 @@ module "vpn_gateway" {
   resource_group_name   = module.resource_group.resource_group_name
   location              = var.location
   environment           = var.environment
-  local_gateway_address = "1.2.3.4"  # Example IP of your on-premises VPN Gateway
-  local_network_address_space = ["10.0.0.0/24"]  # Example local network space
-  shared_key            = "your-shared-key"
+  local_gateway_address = var.local_gateway_address
+  local_network_address_space = var.local_network_address_space
+  shared_key            = var.shared_key
   tags                  = var.tags
 }
 
@@ -71,6 +71,7 @@ module "storage" {
   location            = var.location
   environment         = var.environment
   tags                = var.tags
+  subnet_id           = module.vnet_subnet_id
 }
 
 # CDN Endpoint
@@ -120,12 +121,17 @@ module "keyvault" {
 
 # App Service Plan
 module "app_service_plan" {
-  source              = "./modules/app_service_plan"
-  resource_group_name = module.resource_group.resource_group_name
-  location            = var.location
+  source              = "./modules/app_service_plan"  # Path to the module
   environment         = var.environment
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku_tier            = var.sku_tier
+  sku_size            = var.sku_size
   tags                = var.tags
 }
+
+
+
 
 # Application Gateway
 module "app_gateway" {
@@ -138,40 +144,4 @@ module "app_gateway" {
 
 
 
-# Output the information of deployed resources
-output "vnet_id" {
-  value = module.vnet.vnet_id
-}
-
-output "vpn_gateway_public_ip" {
-  value = module.vpn_gateway.vpn_gateway_public_ip
-}
-
-output "storage_account_name" {
-  value = module.storage.storage_account_name
-}
-
-output "cdn_endpoint_url" {
-  value = module.cdn.cdn_endpoint_url
-}
-
-output "app_service_url" {
-  value = module.app_service_plan.app_service_url
-}
-
-output "keyvault_uri" {
-  value = module.keyvault.keyvault_uri
-}
-
-output "function_app_url" {
-  value = module.functions.function_app_url
-}
-
-output "app_insights_instrumentation_key" {
-  value = module.app_insights.instrumentation_key
-}
-
-output "log_analytics_workspace_id" {
-  value = module.log_analytics.workspace_id
-}
 
