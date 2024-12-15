@@ -24,7 +24,7 @@ resource "azurerm_public_ip" "rm" {
   allocation_method   = "Static"
 }
 
-# since these variables are re-used - a locals block makes this more maintainable
+
 locals {
   backend_address_pool_name      = "${azurerm_virtual_network.rm.name}-beap"
   frontend_port_name             = "${azurerm_virtual_network.rm.name}-feport"

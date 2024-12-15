@@ -121,7 +121,7 @@ module "keyvault" {
 
 # App Service Plan
 module "app_service_plan" {
-  source              = "./modules/app_service_plan"  # Path to the module
+  source              = "./modules/app_service_plan" 
   environment         = var.environment
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -151,8 +151,8 @@ module "azure_firewall" {
   region = 
   location              = var.location
   firewall_name         = "example-firewall"
-  iot_hub_ip            = module.iot_hub.iot_hub_hostname  # Assuming this is the IoT Hub's private IP if using Private Link
-  iot_hub_subnet_id     = module.iot_hub.iot_hub_subnet_id  # Subnet containing IoT Hub
+  iot_hub_ip            = module.iot_hub.iot_hub_hostname  
+  iot_hub_subnet_id     = module.iot_hub.iot_hub_subnet_id 
   tags                  = {
     environment = "Production"
   }
