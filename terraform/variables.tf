@@ -54,3 +54,38 @@ variable "shared_key" {
   description = "Shared key for the VPN connection"
   type        = string
 }
+
+variable "resource_group_name" {
+  description = "The name of the resource group"
+  type        = string
+}
+
+variable "location" {
+  description = "The Azure region where resources will be deployed"
+  type        = string
+}
+
+variable "virtual_network_name" {
+  description = "The name of the virtual network"
+  type        = string
+}
+
+variable "virtual_network_address_space" {
+  description = "The address space of the virtual network"
+  type        = list(string)
+}
+
+variable "firewall_subnet_address_prefix" {
+  description = "The address prefix for the firewall subnet"
+  type        = list(string)
+}
+
+variable "public_ip_name" {
+  description = "The name for the public IP"
+  type        = string
+}
+
+variable "firewall_name" {
+  description = "The name for the Azure Firewall"
+  type        = string
+}

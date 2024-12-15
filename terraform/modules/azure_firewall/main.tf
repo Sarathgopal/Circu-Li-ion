@@ -44,8 +44,4 @@ resource "azurerm_network_security_group" "firewall" {
 
 
 
-variable "region" {}
-variable "resource_group_name" {}
-variable "nsg_name" {}
-variable "vnet_name" {}
-variable "subnet_name" {}
+
