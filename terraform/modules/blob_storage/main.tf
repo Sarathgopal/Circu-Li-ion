@@ -1,34 +1,30 @@
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+resource "azurerm_resource_group" "rm" {
+  name     = "rm-resources"
   location = "West Europe"
 }
 
-resource "azurerm_storage_account" "example" {
-  name                     = "examplestoracc"
-  resource_group_name      = azurerm_resource_group.example.name
-  location                 = azurerm_resource_group.example.location
+resource "azurerm_storage_account" "rm" {
+  name                     = "rmstoracc"
+  resource_group_name      = azurerm_resource_group.rm.name
+  location                 = azurerm_resource_group.rm.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "example" {
+resource "azurerm_storage_container" "rm" {
   name                  = "content"
-  storage_account_name  = azurerm_storage_account.example.name
+  storage_account_name  = azurerm_storage_account.rm.name
   container_access_type = "private"
 }
 
-resource "azurerm_storage_blob" "example" {
+resource "azurerm_storage_blob" "rm" {
   name                   = "my-awesome-content.zip"
-  storage_account_name   = azurerm_storage_account.example.name
-  storage_container_name = azurerm_storage_container.example.name
+  storage_account_name   = azurerm_storage_account.rm.name
+  storage_container_name = azurerm_storage_container.rm.name
   type                   = "Block"
   source                 = "some-local-file.zip"
 }
 
-# Blob Container
-
-
-# Private Endpoint for Blob Storage (Secure access)
 resource "azurerm_private_endpoint" "recipe_storage_pe" {
   name                = "recipe-storage-pe-${var.environment}"
   location            = var.location
@@ -45,7 +41,7 @@ resource "azurerm_private_endpoint" "recipe_storage_pe" {
   tags = var.tags
 }
 
-# Private DNS Zone for Private Endpoint
+
 resource "azurerm_private_dns_zone" "storage_dns_zone" {
   name                = "privatelink.blob.core.windows.net"
   resource_group_name = var.resource_group_name
@@ -58,19 +54,3 @@ resource "azurerm_private_dns_zone_virtual_network_link" "storage_dns_link" {
   virtual_network_id    = var.subnet_id
 }
 
-# Outputs
-output "storage_account_id" {
-  value = azurerm_storage_account.recipe_storage_account.id
-}
-
-output "storage_account_name" {
-  value = azurerm_storage_account.recipe_storage_account.name
-}
-
-output "storage_container_name" {
-  value = azurerm_storage_container.recipe_container.name
-}
-
-output "private_endpoint_id" {
-  value = azurerm_private_endpoint.recipe_storage_pe.id
-}

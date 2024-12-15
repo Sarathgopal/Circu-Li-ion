@@ -1,12 +1,12 @@
-resource "azurerm_resource_group" "example" {
-  name     = "example-resources"
+resource "azurerm_resource_group" "rm" {
+  name     = "rm-resources"
   location = "West Europe"
 }
 
-resource "azurerm_cdn_profile" "example" {
-  name                = "exampleCdnProfile"
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+resource "azurerm_cdn_profile" "rm" {
+  name                = "rmCdnProfile"
+  location            = azurerm_resource_group.rm.location
+  resource_group_name = azurerm_resource_group.rm.name
   sku                 = "Standard_Verizon"
 
   tags = {
