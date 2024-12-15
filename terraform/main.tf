@@ -145,6 +145,35 @@ module "app_gateway" {
 
 # Azure Firewall module
 
+module "azure_firewall" {
+  source                = "./modules/azure_firewall"
+  resource_group_name   = module.resource_group.resource_group_name
+  region = 
+  location              = var.location
+  firewall_name         = "example-firewall"
+  iot_hub_ip            = module.iot_hub.iot_hub_hostname  # Assuming this is the IoT Hub's private IP if using Private Link
+  iot_hub_subnet_id     = module.iot_hub.iot_hub_subnet_id  # Subnet containing IoT Hub
+  tags                  = {
+    environment = "Production"
+  }
+}
 
+# Azure IoT Hub
+
+module "iot_hub" {
+  source              = "./modules/iot_hub"
+  resource_group_name = module.resource_group.resource_group_name
+  subnet_id = module.vnet_subnet_id
+
+}
+
+# Event Grid Module
+module "event_grid" {
+  source                  = "./modules/event_grid"
+  resource_group_name     = module.resource_group.resource_group_name
+     webhook_url = "https://myapi.example.com/webhook"
+  subnet_id = module.vnet_subnet_id
+
+}
 
 

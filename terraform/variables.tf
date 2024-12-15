@@ -89,3 +89,7 @@ variable "firewall_name" {
   description = "The name for the Azure Firewall"
   type        = string
 }
+
+variable "subnet_name" {
+  
+}
