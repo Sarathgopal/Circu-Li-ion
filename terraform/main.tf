@@ -154,13 +154,6 @@ module "iot_hub" {
 
 }
 
-# Event Grid Module
-module "event_grid" {
-  source                  = "./modules/event_grid"
-  resource_group_name     = module.resource_group.resource_group_name
-     webhook_url = "https://myapi.example.com/webhook"
-  subnet_id = module.vnet_subnet_id
 
-}
 
 
