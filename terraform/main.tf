@@ -143,6 +143,7 @@ module "app_gateway" {
 }
 
 
+
 # Azure IoT Hub
 
 module "iot_hub" {
