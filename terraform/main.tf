@@ -143,27 +143,13 @@ module "app_gateway" {
 }
 
 
-# Azure Firewall module
-
-module "azure_firewall" {
-  source                = "./modules/azure_firewall"
-  resource_group_name   = module.resource_group.resource_group_name
-  region = 
-  location              = var.location
-  firewall_name         = "example-firewall"
-  iot_hub_ip            = module.iot_hub.iot_hub_hostname  
-  iot_hub_subnet_id     = module.iot_hub.iot_hub_subnet_id 
-  tags                  = {
-    environment = "Production"
-  }
-}
-
 # Azure IoT Hub
 
 module "iot_hub" {
   source              = "./modules/iot_hub"
   resource_group_name = module.resource_group.resource_group_name
   subnet_id = module.vnet_subnet_id
+  location = var.location
 
 }
 
